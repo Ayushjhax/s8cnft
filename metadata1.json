@@ -1,0 +1,36 @@
+{
+	"name"                   : "Solana Summer Fellowship 2024",
+	"symbol"                 : "SSF",
+	"description"            : "Solana Summer Fellowship 2024 cNFT collection by Ayush",
+	"seller_fee_basis_points": 0,
+	"image"                  : "https://media.licdn.com/dms/image/v2/D5603AQHZUyfu7XcQVw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713613111670?e=1732147200&v=beta&t=efMPOP2i3nvE7nW-mYs8h9vs6GU2vE8XT68O3sSg1bE",
+	"external_url"           : "https://x.com/ayushjhax",
+	"attributes"             : [
+		{
+			"trait_type": "Program",
+			"value"     : "Solana Summer Fellowship"
+		},
+		{
+			"trait_type": "Link",
+			"value"     : "https://x.com/ayushjhax"
+		}
+	],
+	"collection": {
+		"name"  : "Ayush cNFTs Collection ",
+		"family": "Ayush cNFTs"
+	},
+	"properties": {
+	  "files": [
+		{
+			"uri" : "https://media.licdn.com/dms/image/v2/D5603AQHZUyfu7XcQVw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713613111670?e=1732147200&v=beta&t=efMPOP2i3nvE7nW-mYs8h9vs6GU2vE8XT68O3sSg1bE",
+			"type": "image/png"
+		}
+	  ],
+	  "category": "image"
+	},
+	"creators": {
+		"address" : "JCsFjtj6tem9Dv83Ks4HxsL7p8GhdLtokveqW7uWjGyi",
+		"verified": false,
+		"share"   : 100
+	}
+  }
