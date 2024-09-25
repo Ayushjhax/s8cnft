@@ -17,10 +17,8 @@ import { MERKLE_MAX_DEPTH, MERKLE_MAX_BUFFER_SIZE } from "./config";
 
 import { addrToLink } from "./utils";
 
-const rpcURL =
-  (process.env.NODE_ENV === "production"
-    ? process.env.SOLANA_MAINNET_RPC_URL
-    : process.env.SOLANA_DEVNET_RPC_URL) || "https://api.devnet.solana.com";
+const rpcURL = 
+  process.env.SOLANA_MAINNET_RPC_URL || process.env.SOLANA_DEVNET_RPC_URL;
 
 const payerKeyFile = "key.json";
 const keyData = fs.readFileSync(payerKeyFile, "utf8");
@@ -53,13 +51,11 @@ const run = async () => {
     await builder.sendAndConfirm(umi);
     console.log("Merkle tree created and transaction confirmed.");
 
-    const cluster =
-      process.env.NODE_ENV !== "production" ? "?cluster=devnet" : "";
-    const txLink = addrToLink(merkleTree.publicKey, cluster);
+    const cluster = process.env.NODE_ENV !== 'Mainnet' ? '?cluster=devnet' : '';
+    const txLink = addrToLink(merkleTree.publicKey.toString(), cluster);
     console.log("Transaction link:", txLink);
 
-    const network =
-      process.env.NODE_ENV === "production" ? "Mainnet" : "Devnet";
+    const network = process.env.NODE_ENV === "Mainnet" ? "Mainnet" : "Devnet";
     const merkleFilePath = `./data/merkleTree${network}.txt`;
     fs.writeFileSync(merkleFilePath, merkleTree.publicKey.toString());
     console.log(`Merkle tree public key saved to: ${merkleFilePath}`);

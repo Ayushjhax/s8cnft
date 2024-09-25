@@ -22,10 +22,9 @@ import {
   mplBubblegum,
 } from "@metaplex-foundation/mpl-bubblegum";
 
+// Determine the RPC URL, prioritizing mainnet, fallback to devnet
 const rpcURL =
-  (process.env.NODE_ENV === "production"
-    ? process.env.SOLANA_MAINNET_RPC_URL
-    : process.env.SOLANA_DEVNET_RPC_URL) || "https://api.devnet.solana.com";
+  process.env.SOLANA_MAINNET_RPC_URL || process.env.SOLANA_DEVNET_RPC_URL;
 
 const payerKeyFile = "key.json";
 const keyData = fs.readFileSync(payerKeyFile, "utf8");
@@ -40,22 +39,13 @@ const run = async () => {
     console.log("Signer:", signer.publicKey);
     umi.use(signerIdentity(signer));
 
-    const nodeEnv =
-      process.env.NODE_ENV === "production" ? "Mainnet" : "Devnet";
-    const merkleTreeTxt = fs.readFileSync(
-      `./data/merkleTree${nodeEnv}.txt`,
-      "utf8"
-    );
-    const merkleTreeAccount = await fetchMerkleTree(
-      umi,
-      publicKey(merkleTreeTxt)
-    );
+    const nodeEnv = process.env.NODE_ENV === "Mainnet" ? "Mainnet" : "Devnet";
+
+    const merkleTreeTxt = fs.readFileSync(`./data/merkleTree${nodeEnv}.txt`, "utf8");
+    const merkleTreeAccount = await fetchMerkleTree(umi, publicKey(merkleTreeTxt));
     console.log("Merkle Tree Account:", merkleTreeAccount.publicKey);
 
-    const collectionMintTxt = fs.readFileSync(
-      `./data/collectionMint${nodeEnv}.txt`,
-      "utf8"
-    );
+    const collectionMintTxt = fs.readFileSync(`./data/collectionMint${nodeEnv}.txt`, "utf8");
     const collectionMintAccount = publicKey(collectionMintTxt);
     console.log("Collection Mint Account:", collectionMintAccount);
 
@@ -74,7 +64,7 @@ const run = async () => {
         metadata: {
           name: NFT_ITEM_NAME,
           uri: nftItemJsonUri,
-          sellerFeeBasisPoints: FEE_PERCENT * 100,
+          sellerFeeBasisPoints: FEE_PERCENT * 100,  
           collection: {
             key: collectionMintAccount,
             verified: false,
@@ -83,9 +73,7 @@ const run = async () => {
         },
       }).sendAndConfirm(umi);
 
-      const nftItemMintExplorerUrl = getExplorerUrl(
-        bs58.encode(mint.signature)
-      );
+      const nftItemMintExplorerUrl = getExplorerUrl(bs58.encode(mint.signature));
       console.log("NFT Item Mint:", nftItemMintExplorerUrl);
       fs.writeFileSync(
         `./data/nftItemMint${nodeEnv}.txt`,
@@ -93,6 +81,7 @@ const run = async () => {
         { flag: "a" }
       );
 
+      // Pause for 2 seconds before the next mint
       console.log("Pausing for 2 seconds before next mint...");
       await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log("");

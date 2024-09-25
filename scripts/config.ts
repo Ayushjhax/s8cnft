@@ -14,7 +14,7 @@ export const FEE_PERCENT = 0;
 export const EXTERNAL_URL = 'https://x.com/ayushjhax';
 export const CREATORS = [
   {
-    address: publicKey('JCsFjtj6tem9Dv83Ks4HxsL7p8GhdLtokveqW7uWjGyi'),
+    address: publicKey('J66XradEo98H2Zyax3xdDHnqRsntZ2JqwS8doRfYEGzV'),
     verified: false,
     share: 100,
   },

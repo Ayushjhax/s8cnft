@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs'; 
 import { parse } from 'csv-parse';
 import dotenv from 'dotenv';
-dotenv.config(); // Load environment variables
+dotenv.config(); 
 
 type CsvRow = { [key: string]: string };
 
@@ -17,7 +17,7 @@ export async function readCsv(filePath: string): Promise<CsvRow[]> {
 }
 
 export function getRpcUrl(): string {
-  return process.env.NODE_ENV === 'production'
+  return process.env.NODE_ENV === 'Mainnet'
     ? process.env.SOLANA_MAINNET_RPC_URL || 'https://api.mainnet-beta.solana.com'
     : process.env.SOLANA_DEVNET_RPC_URL || 'https://api.devnet.solana.com';
 }
@@ -55,7 +55,7 @@ export function sleep(ms: number): Promise<void> {
 }
 
 export function getExplorerUrl(signature: string): string {
-  const cluster = process.env.NODE_ENV !== 'production' ? '?cluster=devnet' : '';
+  const cluster = process.env.NODE_ENV !== 'Mainnet' ? '?cluster=devnet' : '';
   return `https://explorer.solana.com/tx/${signature}${cluster}`;
 }
 

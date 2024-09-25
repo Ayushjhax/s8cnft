@@ -23,10 +23,7 @@ import {
 } from "./config";
 import { addrToLink } from "./utils";
 
-const rpcURL =
-  process.env.NODE_ENV === "production"
-    ? process.env.SOLANA_MAINNET_RPC_URL
-    : process.env.SOLANA_DEVNET_RPC_URL || "https://api.devnet.solana.com";
+const rpcURL = process.env.SOLANA_MAINNET_RPC_URL || process.env.SOLANA_DEVNET_RPC_URL || "https://api.devnet.solana.com";
 
 const payerKeyFile = "key.json";
 const keyData = readFileSync(payerKeyFile, "utf8");
@@ -40,7 +37,7 @@ const run = async () => {
     const signer = createSignerFromKeypair({ eddsa: umi.eddsa }, keyPair);
     umi.use(signerIdentity(signer));
 
-    console.log("Signer Public Key:", signer.publicKey);
+    console.log("Signer Public Key:", signer.publicKey.toString());
 
     const collectionImageUri = IMAGE_URL;
     writeFileSync("./data/collectionImageUri.txt", collectionImageUri);
@@ -63,7 +60,7 @@ const run = async () => {
     writeFileSync("./data/collectionJsonUri.txt", collectionJsonUri);
 
     const collectionMint = generateSigner(umi);
-    console.log("Collection Mint Public Key:", collectionMint.publicKey);
+    console.log("Collection Mint Public Key:", collectionMint.publicKey.toString());
 
     await createNft(umi, {
       mint: collectionMint,
@@ -74,18 +71,18 @@ const run = async () => {
       isCollection: true,
     }).sendAndConfirm(umi);
 
-    const explorerCluster =
-      process.env.NODE_ENV !== "production" ? "?cluster=devnet" : "";
-    const collectionMintExplorerUrl = `https://explorer.solana.com/address/${collectionMint.publicKey}${explorerCluster}`;
+    const explorerCluster = process.env.NODE_ENV !== 'Mainnet' ? '?cluster=devnet' : '';
+    const collectionMintExplorerUrl = `https://explorer.solana.com/address/${collectionMint.publicKey.toString()}${explorerCluster}`;
     console.log("Collection Mint Explorer URL:", collectionMintExplorerUrl);
 
-    const txLink = addrToLink(collectionMint.publicKey, explorerCluster);
+    const txLink = addrToLink(collectionMint.publicKey.toString(), explorerCluster);
     console.log("Transaction Link:", txLink);
 
     const mintFileName = `./data/collectionMint${
-      process.env.NODE_ENV === "production" ? "Mainnet" : "Devnet"
+      process.env.NODE_ENV === "Mainnet" ? "Mainnet" : "Devnet"
     }.txt`;
-    writeFileSync(mintFileName, collectionMint.publicKey);
+    writeFileSync(mintFileName, collectionMint.publicKey.toString());
+    console.log(`Collection mint public key saved to: ${mintFileName}`);
   } catch (error) {
     console.error("Error creating NFT collection:", error);
   }
