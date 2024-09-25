@@ -1,7 +1,7 @@
 # Creating a Compressed Nft Collection!
 
 
-*Screenshot of this cool project of my and other Fellows NFT on both mainnet and devnet.*
+*Screenshot of this cool project of me and other Fellows NFT on both mainnet and devnet.*
 
 <table>
   <tr>
